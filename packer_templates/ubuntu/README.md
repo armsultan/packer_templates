@@ -42,3 +42,12 @@
 8. To ensure VMware artifact is not disconnected from network adapter, set
    `"vmx_remove_ethernet_interfaces": false` (or simply remove that line), in
    the `builders` section in the Packer template `.json` file
+
+9. To disable the Packer defaults of building VMware virtual machines by
+   launching a GUI, set `"headless": true` under the `builder` secion of the
+   packer template. This is required on VMware workstation using, VMware Builder
+   (from ISO), `vmware-iso` to avoid the error:
+
+   ```bash
+   Error: Cannot launch the UI because no display server is present in the current environment
+   ```
