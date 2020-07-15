@@ -5,7 +5,7 @@ freebsd_major="`uname -r | awk -F. '{print $1}'`";
 case "$PACKER_BUILDER_TYPE" in
 
 virtualbox-iso|virtualbox-ovf)
-    # Disable X11 because vagrants are (usually) headless
+    # Disable X11 because this is a headless box
     echo 'WITHOUT_X11="YES"' >> /etc/make.conf;
 
     pkg install -y virtualbox-ose-additions-nox11;
@@ -26,7 +26,7 @@ virtualbox-iso|virtualbox-ovf)
     echo 'ifconfig_vtnet3_name="em3"' >>/etc/rc.conf;
 
     pw groupadd vboxusers;
-    pw groupmod vboxusers -m vagrant;
+    pw groupmod vboxusers -m armand;
     ;;
 
 vmware-iso|vmware-vmx)

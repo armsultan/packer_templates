@@ -24,39 +24,48 @@ templates in the [project home](https://github.com/chef/bento and the ones publi
 
 #### Using `packer`
 
-To build an Ubuntu 18.04 box for only the VirtualBox provider
-
-```
-$ cd packer_templates/ubuntu
-$ packer build -only=virtualbox-iso ubuntu-18.04-amd64.json
-```
-
 To build an Ubuntu 20.04 box for only the Vmware provider
 
-```
+```bash
 $ cd packer_templates/ubuntu
 $ packer build -only=vmware-iso ubuntu-20.04-amd64.json
 ```
 
+To build an Ubuntu 18.04 box for only the VirtualBox provider
+
+```bash
+$ cd packer_templates/ubuntu
+$ packer build -only=virtualbox-iso ubuntu-18.04-amd64.json
+```
+
 To build Debian 10.4 32bit boxes for all possible providers (simultaneously)
 
-```
+```bash
 $ cd packer_templates/debian
 $ packer build debian-10.4-i386.json
 ```
 
 To build CentOS 7.7 boxes for all providers except VMware and Parallels
 
-```
+```bash
 $ cd packer_templates/centos
 $ packer build -except=parallels-iso,vmware-iso centos-7.7-x86_64.json
 ```
 
 To use an alternate mirror
 
-```
+```bash
 $ cd packer_templates/fedora
 $ packer build -var 'mirror=http://mirror.utexas.edu/fedora/linux' fedora-31-x86_64.json
+```
+
+To use a designated packer cache, create a folder and  set the environmental variable
+
+```bash
+$ mkdir /path/to/store/isodownload
+$ PACKER_CACHE_DIR=/path/to/store/isodownload
+$ cd packer_templates/fedora
+$ packer build -only=vmware-iso fedora-31-x86_64.json
 ```
 
 If the build is successful, the Virtual Machine files will be in the `builds` directory at the root of the repository.
@@ -72,7 +81,7 @@ See links below
 
  * [Packer](https://www.packer.io/)
  * [Bento project](https://github.com/chef/bento) by Chef Software
- * Awesome projects
+ * Awesome projects:
   * https://github.com/boxcutter
   * https://github.com/mcandre/packer-templates
   * https://github.com/timsutton/osx-vm-templates

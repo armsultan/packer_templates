@@ -23,11 +23,11 @@
       "iso_url": "{{user `mirror`}}/{{user `mirror_directory`}}/{{user `iso_name`}}",
       "memory": "{{ user `memory` }}",
       "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-virtualbox",
-      "shutdown_command": "echo 'vagrant' | su -m root -c 'shutdown -p now'",
-      "ssh_password": "vagrant",
+      "shutdown_command": "echo '{{ user `username` }}' | su -m root -c 'shutdown -p now'",
+      "ssh_password": "{{ user `username` }}",
       "ssh_port": 22,
       "ssh_timeout": "10000s",
-      "ssh_username": "vagrant",
+      "ssh_username": "{{ user `username` }}",
       "type": "virtualbox-iso",
       "virtualbox_version_file": ".vbox_version",
       "vm_name": "{{ user `template` }}"
@@ -55,11 +55,11 @@
       "iso_url": "{{user `mirror`}}/{{user `mirror_directory`}}/{{user `iso_name`}}",
       "memory": "{{ user `memory` }}",
       "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-vmware",
-      "shutdown_command": "echo 'vagrant' | su -m root -c 'shutdown -p now'",
-      "ssh_password": "vagrant",
+      "shutdown_command": "echo '{{ user `username` }}' | su -m root -c 'shutdown -p now'",
+      "ssh_password": "{{ user `username` }}",
       "ssh_port": 22,
       "ssh_timeout": "10000s",
-      "ssh_username": "vagrant",
+      "ssh_username": "{{ user `username` }}",
       "type": "vmware-iso",
       "vm_name": "{{ user `template` }}",
       "vmx_data": {
@@ -112,11 +112,11 @@
         ]
       ],
       "prlctl_version_file": ".prlctl_version",
-      "shutdown_command": "echo 'vagrant' | su -m root -c 'shutdown -p now'",
-      "ssh_password": "vagrant",
+      "shutdown_command": "echo '{{ user `username` }}' | su -m root -c 'shutdown -p now'",
+      "ssh_password": "{{ user `username` }}",
       "ssh_port": 22,
       "ssh_timeout": "10000s",
-      "ssh_username": "vagrant",
+      "ssh_username": "{{ user `username` }}",
       "type": "parallels-iso",
       "vm_name": "{{ user `template` }}"
     },
@@ -141,37 +141,31 @@
       "iso_url": "{{user `mirror`}}/{{user `mirror_directory`}}/{{user `iso_name`}}",
       "memory": "{{ user `memory` }}",
       "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-qemu",
-      "shutdown_command": "echo 'vagrant' | su -m root -c 'shutdown -p now'",
-      "ssh_password": "vagrant",
+      "shutdown_command": "echo '{{ user `username` }}' | su -m root -c 'shutdown -p now'",
+      "ssh_password": "{{ user `username` }}",
       "ssh_port": 22,
       "ssh_timeout": "10000s",
-      "ssh_username": "vagrant",
+      "ssh_username": "{{ user `username` }}",
       "type": "qemu",
       "vm_name": "{{ user `template` }}"
-    }
-  ],
-  "post-processors": [
-    {
-      "output": "{{ user `build_directory` }}/{{user `box_basename`}}.{{.Provider}}.box",
-      "type": "vagrant",
-      "vagrantfile_template": "{{template_dir}}/vagrantfile_templates/hardenedbsd.rb"
     }
   ],
   "provisioners": [
     {
       "environment_vars": [
-        "HOME_DIR=/home/vagrant",
+        "HOME_DIR=/home/{{ user `username` }}",
         "http_proxy={{user `http_proxy`}}",
         "https_proxy={{user `https_proxy`}}",
         "no_proxy={{user `no_proxy`}}"
       ],
-      "execute_command": "echo 'vagrant' | {{.Vars}} su -m root -c 'sh -eux {{.Path}}'",
+      "execute_command": "echo '{{ user `username` }}' | {{.Vars}} su -m root -c 'sh -eux {{.Path}}'",
       "expect_disconnect": true,
       "scripts": [
         "{{template_dir}}/scripts/update.sh",
         "{{template_dir}}/scripts/postinstall.sh",
+        "{{template_dir}}/../_common/motd.sh",
         "{{template_dir}}/scripts/sudoers.sh",
-        "{{template_dir}}/../_common/vagrant.sh",
+        "{{template_dir}}/../_common/{{ user `username` }}.sh",
         "{{template_dir}}/scripts/cleanup.sh",
         "{{template_dir}}/scripts/minimize.sh"
       ],
@@ -180,14 +174,13 @@
   ],
   "variables": {
     "username": "armand",
-    "hostname": "freebsd",
     "box_basename": "hardenedbsd-11",
     "build_directory": "../../builds",
     "build_timestamp": "{{isotime \"20060102150405\"}}",
     "cpus": "1",
     "disk_size": "65536",
     "git_revision": "__unknown_git_revision__",
-    "headless": "",
+    "headless": "true",
     "http_directory": "{{template_dir}}/http",
     "http_proxy": "{{env `http_proxy`}}",
     "https_proxy": "{{env `https_proxy`}}",

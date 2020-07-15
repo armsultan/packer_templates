@@ -18,7 +18,7 @@ nfs_server_enable="YES"
 mountd_flags="-r"
 RC_CONF
 
-# Disable X11 because Vagrants VMs are (usually) headless
+# Disable X11 because this VM is headless
 cat >>/etc/make.conf << MAKE_CONF
 WITHOUT_X11="YES"
 MAKE_CONF
