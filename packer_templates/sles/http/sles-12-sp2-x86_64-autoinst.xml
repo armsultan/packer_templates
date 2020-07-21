@@ -74,11 +74,11 @@
     </dhcp_options>
     <dns>
       <dhcp_hostname config:type="boolean">false</dhcp_hostname>
-      <domain>vagrantup.com</domain>
-      <hostname>vagrant-sles-12-x64</hostname>
+      <domain>example.com</domain>
+      <hostname>sles</hostname>
       <resolv_conf_policy>auto</resolv_conf_policy>
       <searchlist config:type="list">
-        <search>vagrantup.com</search>
+        <search>example.com</search>
       </searchlist>
       <write_hostname config:type="boolean">true</write_hostname>
     </dns>
@@ -245,9 +245,9 @@
   <users config:type="list">
     <user>
       <encrypted config:type="boolean">true</encrypted>
-      <fullname>vagrant</fullname>
+      <fullname>armand</fullname>
       <gid>100</gid>
-      <home>/home/vagrant</home>
+      <home>/home/armand</home>
       <password_settings>
         <expire/>
         <flag/>
@@ -258,8 +258,8 @@
       </password_settings>
       <shell>/bin/bash</shell>
       <uid>1000</uid>
-      <user_password>$2y$05$NA1Li9ZKJOLRW5mMTXm6/e5r8dltWS5RpDZpvHrI82aLE00V51tdi</user_password>
-      <username>vagrant</username>
+      <user_password>armand</user_password>
+      <username>armand</username>
     </user>
     <user>
       <encrypted config:type="boolean">true</encrypted>
@@ -276,7 +276,7 @@
       </password_settings>
       <shell>/bin/bash</shell>
       <uid>0</uid>
-      <user_password>$6$UgKtUD0AUMIA$VWLyc2Uvl0Lk6xxfTuoRb0/jrhZ9IJG/Gtx/DkZUEWZm.JYO1Q1fvPo6gDxQAHp38kQ1DG1vNGRgu2T/z/vih.</user_password>
+      <user_password>root</user_password>
       <username>root</username>
     </user>
   </users>

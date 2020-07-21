@@ -14,8 +14,8 @@
         "root<enter><wait><wait>",
         "solaris<enter><wait><wait>",
         "<wait10>",
-        "while (true); do sleep 5; test -f /a/etc/sudoers \u0026\u0026 grep -v \"vagrant\" \"/a/etc/sudoers\" 2> /dev/null<wait>",
-        " \u0026\u0026 echo \"vagrant ALL=(ALL) NOPASSWD: ALL\" >> /a/etc/sudoers \u0026\u0026 break ; done \u0026<enter><wait>",
+        "while (true); do sleep 5; test -f /a/etc/sudoers \u0026\u0026 grep -v \"{{ user `username` }}\" \"/a/etc/sudoers\" 2> /dev/null<wait>",
+        " \u0026\u0026 echo \"{{ user `username` }} ALL=(ALL) NOPASSWD: ALL\" >> /a/etc/sudoers \u0026\u0026 break ; done \u0026<enter><wait>",
         "<enter>while (true); do grep \"You may wish to reboot\" \"/var/svc/log/application-auto-installer:default.log\" 2> /dev/null<wait>",
         " \u0026\u0026 reboot; sleep 10; done \u0026<enter><wait>",
         "sleep 5; curl http://{{ .HTTPIP }}:{{ .HTTPPort }}/default.xml -o default.xml;<wait>",
@@ -41,12 +41,12 @@
       "iso_url": "{{user `mirror`}}/sol-11_4-ai-x86.iso",
       "memory": "{{ user `memory` }}",
       "output_directory": "packer-solaris-11.4-x86_64-virtualbox",
-      "shutdown_command": "echo 'vagrant'|sudo -i init 5",
+      "shutdown_command": "echo '{{ user `username` }}'|sudo -i init 5",
       "shutdown_timeout": "10m",
-      "ssh_password": "vagrant",
+      "ssh_password": "{{ user `username` }}",
       "ssh_port": 22,
       "ssh_timeout": "10000s",
-      "ssh_username": "vagrant",
+      "ssh_username": "{{ user `username` }}",
       "type": "virtualbox-iso",
       "virtualbox_version_file": ".vbox_version",
       "vm_name": "{{ user `template` }}"
@@ -65,8 +65,8 @@
         "root<enter><wait><wait>",
         "solaris<enter><wait><wait>",
         "<wait10>",
-        "while (true); do sleep 5; test -f /a/etc/sudoers \u0026\u0026 grep -v \"vagrant\" \"/a/etc/sudoers\" 2> /dev/null<wait>",
-        " \u0026\u0026 echo \"vagrant ALL=(ALL) NOPASSWD: ALL\" >> /a/etc/sudoers \u0026\u0026 break ; done \u0026<enter><wait>",
+        "while (true); do sleep 5; test -f /a/etc/sudoers \u0026\u0026 grep -v \"{{ user `username` }}\" \"/a/etc/sudoers\" 2> /dev/null<wait>",
+        " \u0026\u0026 echo \"{{ user `username` }} ALL=(ALL) NOPASSWD: ALL\" >> /a/etc/sudoers \u0026\u0026 break ; done \u0026<enter><wait>",
         "<enter>while (true); do grep \"You may wish to reboot\" \"/var/svc/log/application-auto-installer:default.log\" 2> /dev/null<wait>",
         " \u0026\u0026 reboot; sleep 10; done \u0026<enter><wait>",
         "sleep 5; curl http://{{ .HTTPIP }}:{{ .HTTPPort }}/default.xml -o default.xml;<wait>",
@@ -89,12 +89,12 @@
       "iso_url": "{{user `mirror`}}/sol-11_4-ai-x86.iso",
       "memory": "{{ user `memory` }}",
       "output_directory": "packer-solaris-11.4-x86_64-vmware",
-      "shutdown_command": "echo 'vagrant'|sudo -i init 5",
+      "shutdown_command": "echo '{{ user `username` }}'|sudo -i init 5",
       "shutdown_timeout": "10m",
-      "ssh_password": "vagrant",
+      "ssh_password": "{{ user `username` }}",
       "ssh_port": 22,
       "ssh_timeout": "10000s",
-      "ssh_username": "vagrant",
+      "ssh_username": "{{ user `username` }}",
       "type": "vmware-iso",
       "vm_name": "{{ user `template` }}",
       "vmx_data": {
@@ -103,20 +103,14 @@
       "vmx_remove_ethernet_interfaces": false
     }
   ],
-  "post-processors": [
-    {
-      "output": "{{ user `build_directory` }}/{{user `box_basename`}}.{{.Provider}}.box",
-      "type": "vagrant"
-    }
-  ],
   "provisioners": [
     {
       "environment_vars": [],
-      "execute_command": "echo 'vagrant'|sudo -S bash {{.Path}}",
+      "execute_command": "echo '{{ user `username` }}'|sudo -S bash {{.Path}}",
       "expect_disconnect": true,
       "scripts": [
         "{{template_dir}}/scripts/update.sh",
-        "{{template_dir}}/scripts/vagrant.sh",
+        "{{template_dir}}/../_common/{{ user `username` }}.sh",
         "{{template_dir}}/scripts/vmtools.sh",
         "{{template_dir}}/scripts/minimize.sh"
       ],

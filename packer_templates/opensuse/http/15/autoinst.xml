@@ -181,13 +181,13 @@
   </user_defaults>
   <users config:type="list">
     <user>
-      <user_password>vagrant</user_password>
+      <user_password>root</user_password>
       <username>root</username>
     </user>
     <user>
-      <fullname>vagrant</fullname>
+      <fullname>armand</fullname>
       <gid>100</gid>
-      <home>/home/vagrant</home>
+      <home>/home/armand</home>
       <password_settings>
         <expire />
         <flag />
@@ -198,8 +198,8 @@
       </password_settings>
       <shell>/bin/bash</shell>
       <uid>1000</uid>
-      <user_password>vagrant</user_password>
-      <username>vagrant</username>
+      <user_password>armand</user_password>
+      <username>armand</username>
     </user>
   </users>
   <kdump>

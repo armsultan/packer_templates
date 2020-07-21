@@ -68,12 +68,32 @@ $ cd packer_templates/fedora
 $ packer build -only=vmware-iso fedora-31-x86_64.json
 ```
 
+Configuring Packer logging
+
+Packer depends on two environment variables being configured, `PACKER_LOG` and `PACKER_LOG_PATH`
+
+```bash
+$ export PACKER_LOG=1
+$ export PACKER_LOG_PATH="packerlog.txt"
+$ packer build -only=vmware-iso alpine-3.12-x86.json
+$ tail -f packerlog.txt
+```
+
+
 If the build is successful, the Virtual Machine files will be in the `builds` directory at the root of the repository.
+
+### CENTOS/RHEL/ORACLE Linux type OSes
+
+CENTOS, RHEL and ORACLE Linux share the same kickstart, `ks.cfg`, and build scripts found in the `centos` folder.
+These scripts set the hostname to `newvm`, so rename and adjust accordingly per build
+
 
 ### Proprietary Templates
 
 Templates for operating systems (macOS, Red Hat Enterprise Linux, and SUSE Linux Enterprise)
 that require license or subscription require you to add the correct links to the ISOs as they are not publicly available
+
+The Packer templates expect the ISOs to be in `./packer_cache` folder relative to the Packer `.json` file
 
 ### Other helpful resources and troubleshooting tips
 
@@ -86,3 +106,4 @@ See links below
   * https://github.com/mcandre/packer-templates
   * https://github.com/timsutton/osx-vm-templates
   * https://github.com/ferventcoder/vagrant-windows-puppet/tree/master/baseboxes
+  * https://github.com/mrlesmithjr/packer-templates

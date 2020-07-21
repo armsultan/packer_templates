@@ -21,11 +21,11 @@
       "name": "{{ user `template` }}",
       "net_device": "virtio-net",
       "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-libvirt",
-      "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
-      "ssh_password": "vagrant",
+      "shutdown_command": "echo '{{ user `username` }}'|sudo -S shutdown -P now",
+      "ssh_password": "{{ user `username` }}",
       "ssh_port": 22,
       "ssh_timeout": "3600s",
-      "ssh_username": "vagrant",
+      "ssh_username": "{{ user `username` }}",
       "type": "qemu",
       "vm_name": "{{ user `template` }}"
     },
@@ -46,11 +46,11 @@
       "iso_url": "{{user `mirror`}}/{{user `mirror_directory`}}/{{user `iso_name`}}",
       "memory": "{{ user `memory` }}",
       "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-virtualbox",
-      "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
-      "ssh_password": "vagrant",
+      "shutdown_command": "echo '{{ user `username` }}'|sudo -S shutdown -P now",
+      "ssh_password": "{{ user `username` }}",
       "ssh_port": 22,
       "ssh_timeout": "10000s",
-      "ssh_username": "vagrant",
+      "ssh_username": "{{ user `username` }}",
       "type": "virtualbox-iso",
       "virtualbox_version_file": ".vbox_version",
       "vm_name": "{{ user `template` }}"
@@ -69,11 +69,11 @@
       "iso_url": "{{user `mirror`}}/{{user `mirror_directory`}}/{{user `iso_name`}}",
       "memory": "{{ user `memory` }}",
       "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-vmware",
-      "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
-      "ssh_password": "vagrant",
+      "shutdown_command": "echo '{{ user `username` }}'|sudo -S shutdown -P now",
+      "ssh_password": "{{ user `username` }}",
       "ssh_port": 22,
       "ssh_timeout": "10000s",
-      "ssh_username": "vagrant",
+      "ssh_username": "{{ user `username` }}",
       "tools_upload_flavor": "linux",
       "type": "vmware-iso",
       "vm_name": "{{ user `template` }}",
@@ -98,11 +98,11 @@
       "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-parallels",
       "parallels_tools_flavor": "lin",
       "prlctl_version_file": ".prlctl_version",
-      "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
-      "ssh_password": "vagrant",
+      "shutdown_command": "echo '{{ user `username` }}'|sudo -S shutdown -P now",
+      "ssh_password": "{{ user `username` }}",
       "ssh_port": 22,
       "ssh_timeout": "10000s",
-      "ssh_username": "vagrant",
+      "ssh_username": "{{ user `username` }}",
       "type": "parallels-iso",
       "vm_name": "{{ user `template` }}"
     },
@@ -119,30 +119,24 @@
       "iso_url": "{{user `mirror`}}/{{user `mirror_directory`}}/{{user `iso_name`}}",
       "memory": "{{ user `memory` }}",
       "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-qemu",
-      "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
-      "ssh_password": "vagrant",
+      "shutdown_command": "echo '{{ user `username` }}'|sudo -S shutdown -P now",
+      "ssh_password": "{{ user `username` }}",
       "ssh_port": 22,
       "ssh_timeout": "10000s",
-      "ssh_username": "vagrant",
+      "ssh_username": "{{ user `username` }}",
       "type": "qemu",
       "vm_name": "{{ user `template` }}"
-    }
-  ],
-  "post-processors": [
-    {
-      "output": "{{ user `build_directory` }}/{{user `box_basename`}}.{{.Provider}}.box",
-      "type": "vagrant"
     }
   ],
   "provisioners": [
     {
       "environment_vars": [
-        "HOME_DIR=/home/vagrant",
+        "HOME_DIR=/home/{{ user `username` }}",
         "http_proxy={{user `http_proxy`}}",
         "https_proxy={{user `https_proxy`}}",
         "no_proxy={{user `no_proxy`}}"
       ],
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
+      "execute_command": "echo '{{ user `username` }}' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
       "expect_disconnect": true,
       "scripts": [
         "{{template_dir}}/scripts/swap.sh",
@@ -154,7 +148,7 @@
         "{{template_dir}}/../_common/virtualbox.sh",
         "{{template_dir}}/../_common/vmware.sh",
         "{{template_dir}}/../_common/parallels.sh",
-        "{{template_dir}}/../_common/vagrant.sh",
+        "{{template_dir}}/../_common/{{ user `username` }}.sh",
         "{{template_dir}}/scripts/cleanup.sh",
         "{{template_dir}}/../_common/minimize.sh"
       ],
