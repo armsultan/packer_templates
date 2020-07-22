@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<Foundry>
-<VM>
-<VMId type="string">52 e0 98 a8 92 19 fd 2f-10 bd 88 28 3e 39 c9 53</VMId>
-<ClientMetaData>
-<clientMetaDataAttributes/>
-<HistoryEventList/></ClientMetaData>
-<vmxPathName type="string">amazon.vmx</vmxPathName></VM></Foundry>
