@@ -2,6 +2,7 @@
 *.iso
 *.box
 *.ovf
+*.ova
 *.vmdk
 *.vdi
 virtualfloppy.vfd
