@@ -4,6 +4,8 @@
 *.ovf
 *.ova
 *.vmdk
+*.vmx
+*.vmxf
 *.vdi
 virtualfloppy.vfd
 packer_cache
