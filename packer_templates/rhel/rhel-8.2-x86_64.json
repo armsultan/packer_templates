@@ -142,7 +142,7 @@
     "iso_name": "rhel-8.2-x86_64-dvd.iso",
     "ks_path": "8/ks.cfg",
     "memory": "1024",
-    "mirror": "./packer_cache",
+    "mirror": "../../iso",
     "name": "rhel-8.2",
     "no_proxy": "{{env `no_proxy`}}",
     "template": "rhel-8.2-x86_64",

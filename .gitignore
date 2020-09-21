@@ -14,6 +14,7 @@ packer.log
 /packer-*/
 *.variables.json
 /builds/
+/iso/
 .kitchen
 .kitchen.yml
 Gemfile.lock

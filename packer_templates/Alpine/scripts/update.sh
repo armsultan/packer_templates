@@ -1,6 +1,4 @@
-#!/bin/sh
-
-set -eux
+#!/bin/sh -eux
 
 echo http://dl-cdn.alpinelinux.org/alpine/v3.12/community >> /etc/apk/repositories
 
